@@ -745,7 +745,7 @@ namespace sqlite {
 #ifdef MODERN_SQLITE_STD_STRING_VIEW_SUPPORT
 	 inline database_binder& operator <<(database_binder& db, const string_view& txt) {
 		int hresult{};
-		if ((hresult = sqlite3_bind_text(db._stmt.get(), db._next_index(), txt.data(), -1, SQLITE_TRANSIENT)) != SQLITE_OK) {
+		if ((hresult = sqlite3_bind_text(db._stmt.get(), db._next_index(), txt.data(), txt.size(), SQLITE_TRANSIENT)) != SQLITE_OK) {
 			errors::throw_sqlite_error(hresult, db.sql());
 		}
 		
@@ -753,7 +753,7 @@ namespace sqlite {
 	}
 	 inline database_binder& operator <<(database_binder& db, const u16string_view& txt) {
 		int hresult{};
-		if ((hresult = sqlite3_bind_text16(db._stmt.get(), db._next_index(), txt.data(), -1, SQLITE_TRANSIENT)) != SQLITE_OK) {
+		if ((hresult = sqlite3_bind_text16(db._stmt.get(), db._next_index(), txt.data(), 2 * txt.size(), SQLITE_TRANSIENT)) != SQLITE_OK) {
 			errors::throw_sqlite_error(hresult, db.sql());
 		}
 		
